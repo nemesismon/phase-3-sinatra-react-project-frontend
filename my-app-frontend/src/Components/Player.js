@@ -7,22 +7,23 @@ function Player() {
 
     function handleAddPlayer(newPlayer) {
         setPlayers([...players, newPlayer])
-        // ***Place POST fetch here***
+        // ***Place POST request here***
     }
-
 
     function handleSubmit(e) {
         e.preventDefault();
-
         handleAddPlayer(name)
-
         setName("")
     }
 
+    //***Place DELETE request here***
+    
     const playerList = () => players.map((player) => {
         return(
             <p key={player}>{player}</p>
     )})
+
+    //Enter ID number to reactivate play?
 
     return (
         <div>

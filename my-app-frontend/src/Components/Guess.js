@@ -5,10 +5,6 @@ function Guess () {
     const[guesses, setGuesses] = useState([])
     const[guess, setGuess] = useState("")
 
-    function handleAddGuesses(newGuess) {
-        setGuesses([...guesses, newGuess])
-    }
-
     function handleSubmit(e) {
         e.preventDefault();
 
@@ -17,10 +13,15 @@ function Guess () {
         setGuess("")
     }
 
+    function handleAddGuesses(newGuess) {
+        setGuesses([...guesses, newGuess])
+    }
+
     const guessList = () => guesses.map((guess) => {
         return (
             <p key={guess}>{guess}</p>
-        )})
+        )
+        })
 
     return (
         <div>
