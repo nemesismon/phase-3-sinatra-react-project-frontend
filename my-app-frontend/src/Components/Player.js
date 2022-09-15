@@ -1,7 +1,8 @@
 import {useState} from 'react';
 
 function Player() {
-
+    
+    //Initial states required for adding players, creating an array, and rendering it
     const [name, setName] = useState("")
     const [players, setPlayers] = useState([])
 
