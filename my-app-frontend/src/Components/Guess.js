@@ -2,6 +2,7 @@ import {useState} from 'react'
 
 function Guess () {
 
+    //Initial states for adding guesses, making a guess list and rendering it
     const[guesses, setGuesses] = useState([])
     const[guess, setGuess] = useState("")
 
