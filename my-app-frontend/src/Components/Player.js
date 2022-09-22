@@ -1,34 +1,35 @@
 import {useState} from 'react';
 
-function Player() {
+function Player({ players, setPlayers }) {
     
-    //Initial states required for adding players, creating an array, and rendering it
-    const [name, setName] = useState("")
-    const [players, setPlayers] = useState([])
+    const[name, setName] = useState("")
 
-    function handleAddPlayer(newPlayer) {
-        setPlayers([...players, newPlayer])
-        // ***Place POST request here***
-    }
-
-    function handleSubmit(e) {
-        e.preventDefault();
-        handleAddPlayer(name)
+    //Works and sends back primary key from DB
+    const handleAddPlayer = (e) => {
+        e.preventDefault()
+        setPlayers([...players, name])
+        fetch("http://localhost:9292/players", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name: name,
+            }),
+        })
+            .then((r) => r.json())
+            .then((data) => setPlayers(data))
         setName("")
     }
-
-    //***Place DELETE request here***
     
     const playerList = () => players.map((player) => {
         return(
-            <p key={player}>{player}</p>
+                <p key={player.id}>{player.name}</p>
     )})
-
-    //Enter ID number to reactivate play?
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleAddPlayer}>
                 <input 
                     type="text"
                     name="player"
@@ -44,4 +45,4 @@ function Player() {
     )
 }
 
-export default Player;
+export default Player

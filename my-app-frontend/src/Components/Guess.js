@@ -1,36 +1,56 @@
 import {useState} from 'react'
+import EditForm from './EditForm'
 
-function Guess () {
+function Guess({currentPlayer, guesses, setGuesses}) {
 
-    //Initial states for adding guesses, making a guess list and rendering it
-    const[guesses, setGuesses] = useState([])
+    // MOVE THIS TO APP
     const[guess, setGuess] = useState("")
+    const[editFormFlag, setEditFormFlag] = useState(false)
 
-    function handleSubmit(e) {
+    const handleAddGuess = (e) => {
         e.preventDefault();
-
-        handleAddGuesses(guess)
-
+        setGuesses([...guesses, guess])
+        fetch("http://localhost:9292/guesses", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                actor: guess,
+                player_id: currentPlayer.id,
+            }),
+        })
+            .then((r) => r.json())
+            .then((dataReceived) => setGuesses(dataReceived))
         setGuess("")
     }
 
-    function handleAddGuesses(newGuess) {
-        setGuesses([...guesses, newGuess])
+    const handleDeleteClick = (guess) => {
+        fetch(`http://localhost:9292/guesses/${guess.id}`, {
+            method: "DELETE",
+        })
+        .then((r) => r.json())
+        .then((dataReceived) => setGuesses(dataReceived))
     }
 
     const guessList = () => guesses.map((guess) => {
         return (
-            <p key={guess}>{guess}</p>
+            <div>
+            <p key={guess.id}>{guess.actor} <button type="button" value={guess} onClick={setEditFormFlag(true)}>Edit</button> <button type="button" onClick={() => handleDeleteClick(guess)}>X</button></p>
+            {editFormFlag ? <EditForm setEditFormFlag={setEditFormFlag}/> : null}
+            </div>
         )
-        })
+    })
+
+        console.log(guesses)
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleAddGuess}>
                 <input 
                     type="text"
                     name="guess"
-                    placeholder="Enter the name of an actor."
+                    placeholder="Name an actor"
                     value={guess}
                     onChange={(e) => setGuess(e.target.value)}
                 />
@@ -42,4 +62,4 @@ function Guess () {
     )
 }
 
-export default Guess;
+export default Guess
