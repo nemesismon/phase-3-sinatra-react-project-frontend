@@ -12,14 +12,11 @@ import {
 } from "react-router-dom";
 
 function App() {
-
-  //Updated App with creation of function components
   //***Page routing and rendering***
   
   const[players, setPlayers] = useState([])
   const[currentPlayer, setCurrentPlayer] = useState([])
   const[guesses, setGuesses] = useState([])
-  // const[loading, setLoading] = useState(false)
 
   //***GETs here too***
   // Handle database check and state reestablishment in the event of page refresh
@@ -37,10 +34,6 @@ function App() {
 
   console.log(players)
 
-  // const playerGuessCheck = (i) => {
-  //   return checkreturn = guesses[guesses.length].id === players[i].id
-  // }
-
   //***Create player turn cycle and send current player_id to Guess***
   //***Make the turns simpler***
   // console.log(guesses[guesses.length].id)
@@ -50,9 +43,7 @@ function App() {
   //   console.log(check)
   // }, [loading])
   //   setLoading(true)
-    
   // }
-  
 
   return (
     <div className="App">
