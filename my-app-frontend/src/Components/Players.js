@@ -1,6 +1,7 @@
+import React from 'react'
 import {useState} from 'react';
 
-function Player({ players, setPlayers }) {
+function Players({ players, setPlayers }) {
     
     const[name, setName] = useState("")
 
@@ -22,13 +23,14 @@ function Player({ players, setPlayers }) {
         setName("")
     }
     
-    const playerList = () => players.map((player) => {
+    const playersList = () => players.map((player) => {
         return(
-                <p key={player.id}>{player.name}</p>
+                <p key={player.id}>{player.id}. {player.name}</p>
     )})
 
     return (
         <div>
+            <h3>Players</h3>
             <form onSubmit={handleAddPlayer}>
                 <input 
                     type="text"
@@ -39,10 +41,9 @@ function Player({ players, setPlayers }) {
                 />
                 <button type="submit">Submit</button>
             </form>
-            <p><b>Players</b></p>
-            {playerList()}
+            {playersList()}
         </div>
     )
 }
 
-export default Player
+export default Players

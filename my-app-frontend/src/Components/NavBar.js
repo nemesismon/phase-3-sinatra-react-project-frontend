@@ -1,3 +1,4 @@
+import React from 'react'
 import {NavLink} from 'react-router-dom';
 
 function NavBar() {
@@ -7,24 +8,16 @@ return (
         <br></br>
         <b>
             <NavLink style={{textDecoration: 'none'}} 
-                to="/"
-                exact>
+                to="/">
                     Home &ensp;
             </NavLink>
             <NavLink style={{textDecoration: 'none'}}
-                to="/player"
-                exact>
+                to="/players">
                     Players &ensp;
             </NavLink>
             <NavLink style={{textDecoration: 'none'}}
-                to="/guess"
-                exact>
+                to="/guesses">
                     Guesses &ensp;
-            </NavLink>
-            <NavLink style={{textDecoration: 'none'}}
-                to="/guessnumbers"
-                exact>
-                    GuessNumbers &ensp;
             </NavLink>
         </b>
     </div>
