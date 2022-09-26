@@ -3,6 +3,8 @@ import {NavLink} from 'react-router-dom';
 
 function NavBar() {
 
+//Created pathways for client-side routing
+
 return (
     <div>
         <br></br>

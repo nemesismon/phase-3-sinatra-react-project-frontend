@@ -12,14 +12,11 @@ import {
 } from "react-router-dom";
 
 function App() {
-  //***Page routing and rendering***
   
   const[players, setPlayers] = useState([])
   const[currentPlayer, setCurrentPlayer] = useState([])
   const[guesses, setGuesses] = useState([])
 
-  //***GETs here too***
-  // Handle database check and state reestablishment in the event of page refresh
   useEffect(() => {
     fetch("http://localhost:9292/players")
     .then((r) => r.json())
@@ -44,6 +41,8 @@ function App() {
   // }, [loading])
   //   setLoading(true)
   // }
+
+  //Created Routes/Route and establish props
 
   return (
     <div className="App">
