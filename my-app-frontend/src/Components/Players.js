@@ -4,8 +4,7 @@ import {useState} from 'react';
 function Players({ players, setPlayers }) {
     
     const[name, setName] = useState("")
-
-    //Works and sends back primary key from DB
+    
     const handleAddPlayer = (e) => {
         e.preventDefault()
         setPlayers([...players, name])

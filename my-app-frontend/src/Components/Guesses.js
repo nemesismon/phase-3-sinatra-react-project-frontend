@@ -44,7 +44,7 @@ function Guesses({currentPlayer, guesses, setGuesses, setCurrentPlayer, players}
         setGuess("")
     }
 
-    //***Update this with updated layout to show player and all their guesses
+    //***Move up to parent
     const guessList = () => guesses.map((guessData) => {
                 return (
             <div key={guessData.created_at}>
