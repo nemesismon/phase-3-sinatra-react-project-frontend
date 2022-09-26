@@ -42,8 +42,6 @@ function App() {
   //   setLoading(true)
   // }
 
-  //Created Routes/Route and establish props
-
   return (
     <div className="App">
       <header>

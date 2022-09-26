@@ -2,6 +2,7 @@ import React from 'react'
 
 function EditForm({setEditFormFlag, setChangeGuess, changeGuess, setGuesses, guessData}) {
 
+//Create input form to handle PATCH and return updated list to state from server
 const handleGuessUpdate = (e, changeGuess) => {
     e.preventDefault()
     console.log(guessData)

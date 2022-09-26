@@ -45,6 +45,7 @@ function Guesses({currentPlayer, guesses, setGuesses, setCurrentPlayer, players}
     }
 
     //***Move up to parent
+    //State added to drop in input to edit guess onClick and make PATCH request
     const guessList = () => guesses.map((guessData) => {
                 return (
             <div key={guessData.created_at}>
