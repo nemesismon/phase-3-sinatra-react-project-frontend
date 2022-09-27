@@ -14,7 +14,8 @@ import {
 function App() {
   
   const[players, setPlayers] = useState([])
-  const[currentPlayer, setCurrentPlayer] = useState([])
+  const[counter, setCounter] = useState(0)
+  const[currentPlayer, setCurrentPlayer] = useState({})
   const[guesses, setGuesses] = useState([])
 
   useEffect(() => {
@@ -29,19 +30,21 @@ function App() {
     .then((dataReceived) => setGuesses(dataReceived))
   }, [])
 
-  console.log(players)
-
   //***Create player turn cycle and send current player_id to Guess***
   //***Make the turns simpler***
-  // console.log(guesses[guesses.length].id)
-  // for (let i=0; i < players.length; i++) {
-  // useEffect(() => {
-  //   const check = playerGuessCheck(i) 
-  //   console.log(check)
-  // }, [loading])
-  //   setLoading(true)
-  // }
+  
+  // setCurrentPlayer(players[counter])
 
+  console.log(players)
+
+  // if (players !== []) {
+  //   setCurrentPlayer(players[counter])
+  //   if (currentPlayer.id < players.length) {
+  //     setCounter(counter + 1)
+  //     setCurrentPlayer(players[counter])
+  //   } else {setCounter(0)}
+  // }
+  
   return (
     <div className="App">
       <header>
@@ -52,8 +55,8 @@ function App() {
           <NavBar />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/players" element={<Players players={players} setPlayers={setPlayers}/>} />
-            <Route path="/guesses" element={<Guesses currentPlayer={currentPlayer} guesses={guesses} setGuesses={setGuesses} setCurrentPlayer={setCurrentPlayer} players={players}/>} />      
+            <Route path="/players" element={<Players players={players} setPlayers={setPlayers} setCurrentPlayer={setCurrentPlayer} counter={counter} setCounter={setCounter}/>} />
+            <Route path="/guesses" element={<Guesses currentPlayer={currentPlayer} setCurrentPlayer={setCurrentPlayer} players={players} guesses={guesses} setGuesses={setGuesses} counter={counter} setCounter={setCounter}/>} />      
           </Routes>
         </BrowserRouter>
       </div>

@@ -2,16 +2,14 @@ import React from 'react'
 import {useState} from 'react'
 import EditForm from './EditForm'
 
-function Guesses({currentPlayer, guesses, setGuesses, setCurrentPlayer, players}) {
+function Guesses({currentPlayer, setCurrentPlayer, players, guesses, setGuesses, counter, setCounter}) {
 
     const[guess, setGuess] = useState("")
     const[editFormFlag, setEditFormFlag] = useState(false)
     const[changeGuess, setChangeGuess] = useState("")
-    const[counter, setcounter] = useState(0)
 
     setCurrentPlayer(players[counter])
-    console.log(currentPlayer)
-
+    
     const handleAddGuess = (e) => {
         e.preventDefault()
         fetch("http://localhost:9292/guesses", {
@@ -26,13 +24,10 @@ function Guesses({currentPlayer, guesses, setGuesses, setCurrentPlayer, players}
         })
             .then((r) => r.json())
             .then((dataReceived) => setGuesses(dataReceived))
+
         setGuess("")
-        if (currentPlayer.id < players.length) {
-            setcounter(counter + 1)
-            setCurrentPlayer(players[counter])
-        } else {
-            setcounter(0)
-        }
+        setCounter(counter + 1)
+        setCurrentPlayer(players[counter])
     }
 
     const handleDeleteClick = (guessData) => {
@@ -44,12 +39,11 @@ function Guesses({currentPlayer, guesses, setGuesses, setCurrentPlayer, players}
         setGuess("")
     }
 
-    //***Move up to parent
-    //State added to drop in input to edit guess onClick and make PATCH request
-    const guessList = () => guesses.map((guessData) => {
-                return (
+    //***Needs to show the player guessing and all of their previous guesses (in reverse order?)
+    const guessList = () => currentPlayer.guesses.map((guessData) => {
+            return (
             <div key={guessData.created_at}>
-                <p>{guessData.actor} - ({guessData.player_id}) <button onClick={() => setEditFormFlag(true)}>Edit</button> <button onClick={() => handleDeleteClick(guessData)}>X</button></p>
+                <p>{guessData.actor} <button onClick={() => setEditFormFlag(true)}>Edit</button> <button onClick={() => handleDeleteClick(guessData)}>X</button></p>
                 {editFormFlag ? <EditForm setEditFormFlag={setEditFormFlag} setChangeGuess={setChangeGuess} changeGuess={changeGuess} setGuesses={setGuesses} guessData={guessData}/> : null}
             </div>
         )
@@ -58,6 +52,7 @@ function Guesses({currentPlayer, guesses, setGuesses, setCurrentPlayer, players}
     return (
         <div>
             <h3>Guesses</h3>
+            <h5><b>Current player: {currentPlayer.name}</b></h5>
             <form onSubmit={handleAddGuess}>
                 <input 
                     type="text"
