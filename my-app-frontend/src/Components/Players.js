@@ -23,7 +23,7 @@ function Players({ players, setPlayers }) {
         setName("")
     }
     
-    const playersList = () => players.map((player) => {
+    const playersList = players.map((player) => {
         return(
                 <p key={player.id}>{player.id}. {player.name}</p>
     )})
@@ -41,7 +41,7 @@ function Players({ players, setPlayers }) {
                 />
                 <button type="submit">Submit</button>
             </form>
-            {playersList()}
+            {playersList}
         </div>
     )
 }

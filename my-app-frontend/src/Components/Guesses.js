@@ -1,14 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {useState} from 'react'
 import EditForm from './EditForm'
 
-function Guesses({setPlayers, player, players, counter, setCounter}) {
+function Guesses({setPlayers, players, counter, setCounter}) {
 
     const[guess, setGuess] = useState("")
     const[editFormFlag, setEditFormFlag] = useState(false)
     const[changeGuess, setChangeGuess] = useState("")
-    const[currentPlayer, setCurrentPlayer] = useState([])
+    const[currentPlayer, setCurrentPlayer] = useState({})
    
+    useEffect(() => {
+        fetch(`http://localhost:9292/players/${counter}`)
+        .then((r) => r.json)
+        .then((player) => setCurrentPlayer(player))
+    })
+
+    console.log(currentPlayer)
+
     const handleAddGuess = (e) => {
         e.preventDefault()
         if (guess === '') {
@@ -21,7 +29,7 @@ function Guesses({setPlayers, player, players, counter, setCounter}) {
             },
             body: JSON.stringify({
                 actor: guess,
-                player_id: player.id,
+                player_id: currentPlayer.id,
             }),
         })
         .then((r) => r.json())
@@ -42,8 +50,11 @@ function Guesses({setPlayers, player, players, counter, setCounter}) {
 
     //***Needs to show the player guessing and all of their previous guesses (in reverse order?)
 
-    const guessList = () => {
-        return player.guesses.map((playerGuessData) => {
+    const guessList = players.map((player) => {
+        console.log(player)
+        // setCurrentPlayer(player)
+            return player.guesses.map((playerGuessData) => {
+                console.log(playerGuessData)
             return (
             <div key={playerGuessData.created_at}>
                 <p>{playerGuessData.actor} <button onClick={() => setEditFormFlag(true)}>Edit</button> <button onClick={() => handleDeleteClick(playerGuessData)}>X</button> </p>
@@ -51,12 +62,13 @@ function Guesses({setPlayers, player, players, counter, setCounter}) {
             </div>
             )
         })
-    }
+    })
+    
     
     return (
         <div>
             <h3>Guesses</h3>
-            <h5><b>Current player: {player.name}</b></h5>
+            <h5><b>Current player: {currentPlayer.name}</b></h5>
             <form onSubmit={handleAddGuess}>
                 <input 
                     type="text"
@@ -67,7 +79,7 @@ function Guesses({setPlayers, player, players, counter, setCounter}) {
                 />
                 <button type="submit">Submit</button>
             </form>
-            {guessList()}
+            {guessList}
         </div>
     )
 }

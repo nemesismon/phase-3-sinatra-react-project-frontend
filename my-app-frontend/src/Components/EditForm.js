@@ -1,6 +1,6 @@
 import React from 'react'
 
-function EditForm({setEditFormFlag, setChangeGuess, changeGuess, setGuesses, guessData}) {
+function EditForm({setEditFormFlag, setChangeGuess, changeGuess, setPlayers, playerGuessData}) {
 
 const handleGuessUpdate = (e, changeGuess) => {
     e.preventDefault()
@@ -8,7 +8,7 @@ const handleGuessUpdate = (e, changeGuess) => {
         setEditFormFlag(false)
         return
     }
-    fetch(`http://localhost:9292/guesses/${guessData.id}`, {
+    fetch(`http://localhost:9292/guesses/${playerGuessData.id}`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -18,7 +18,7 @@ const handleGuessUpdate = (e, changeGuess) => {
         }),
     })
         .then((r) => r.json())
-        .then((dataReceived) => setGuesses(dataReceived))
+        .then((dataReceived) => setPlayers(dataReceived))
     setEditFormFlag(false)
     setChangeGuess("")
 }

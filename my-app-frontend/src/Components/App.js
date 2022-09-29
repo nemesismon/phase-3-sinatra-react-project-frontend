@@ -26,15 +26,6 @@ function App() {
   // console.log(players[counter].guesses[0])
   // setCurrentPlayer(players[counter])
   // console.log(currentPlayer)
-
-  const handleGuesses = () => {
-    return players.map((player) => {
-      console.log(players)
-    return (
-      <Route path="/guesses" element={<Guesses setPlayers={setPlayers} player={player} players={players} counter={counter} setCounter={setCounter}/>} />
-    )
-    }
-    )}
       
   return (
     <div className="App">
@@ -46,8 +37,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />   
             <Route path="/players" element={<Players players={players} setPlayers={setPlayers} counter={counter} setCounter={setCounter}/>} />
-            {handleGuesses()}
-            {/* <Route path="/guesses" element={<Guesses setGuesses={setGuesses} players={players} counter={counter} setCounter={setCounter}/>} /> */}
+            <Route path="/guesses" element={<Guesses setPlayers={setPlayers} players={players} counter={counter} setCounter={setCounter}/>} />
           </Routes>
         </BrowserRouter>
       </div>
