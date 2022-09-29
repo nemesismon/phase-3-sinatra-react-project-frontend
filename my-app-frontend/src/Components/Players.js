@@ -1,9 +1,10 @@
 import React from 'react'
 import {useState} from 'react';
 
-function Players({ players, setPlayers, setCurrentPlayer, counter}) {
+function Players({ players, setPlayers }) {
     
     const[name, setName] = useState("")
+
 
     const handleAddPlayer = (e) => {
         e.preventDefault()
@@ -27,9 +28,6 @@ function Players({ players, setPlayers, setCurrentPlayer, counter}) {
                 <p key={player.id}>{player.id}. {player.name}</p>
     )})
 
-    
-
-    //***Work on context of currentplayer and counter, ???
     return (
         <div>
             <h3>Players</h3>

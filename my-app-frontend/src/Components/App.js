@@ -13,10 +13,9 @@ import {
 
 function App() {
   
+  //***Work on context where applicable
   const[players, setPlayers] = useState([])
   const[counter, setCounter] = useState(0)
-  const[currentPlayer, setCurrentPlayer] = useState({})
-  const[guesses, setGuesses] = useState([])
 
   useEffect(() => {
     fetch("http://localhost:9292/players")
@@ -24,39 +23,31 @@ function App() {
     .then((dataReceived) => setPlayers(dataReceived))
   }, [])
 
-  useEffect(() => {
-    fetch("http://localhost:9292/guesses")
-    .then((r) => r.json())
-    .then((dataReceived) => setGuesses(dataReceived))
-  }, [])
-
-  //***Create player turn cycle and send current player_id to Guess***
-  //***Make the turns simpler***
-  
+  // console.log(players[counter].guesses[0])
   // setCurrentPlayer(players[counter])
+  // console.log(currentPlayer)
 
-  console.log(players)
-
-  // if (players !== []) {
-  //   setCurrentPlayer(players[counter])
-  //   if (currentPlayer.id < players.length) {
-  //     setCounter(counter + 1)
-  //     setCurrentPlayer(players[counter])
-  //   } else {setCounter(0)}
-  // }
-  
+  const handleGuesses = () => {
+    return players.map((player) => {
+      console.log(players)
+    return (
+      <Route path="/guesses" element={<Guesses setPlayers={setPlayers} player={player} players={players} counter={counter} setCounter={setCounter}/>} />
+    )
+    }
+    )}
+      
   return (
     <div className="App">
       <header>
-        <p>Fancy meeting you here. Would you like to play <b>The Name Game?</b></p>
       </header>
       <div>
         <BrowserRouter>
           <NavBar />
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/players" element={<Players players={players} setPlayers={setPlayers} setCurrentPlayer={setCurrentPlayer} counter={counter} setCounter={setCounter}/>} />
-            <Route path="/guesses" element={<Guesses currentPlayer={currentPlayer} setCurrentPlayer={setCurrentPlayer} players={players} guesses={guesses} setGuesses={setGuesses} counter={counter} setCounter={setCounter}/>} />      
+            <Route path="/" element={<Home />} />   
+            <Route path="/players" element={<Players players={players} setPlayers={setPlayers} counter={counter} setCounter={setCounter}/>} />
+            {handleGuesses()}
+            {/* <Route path="/guesses" element={<Guesses setGuesses={setGuesses} players={players} counter={counter} setCounter={setCounter}/>} /> */}
           </Routes>
         </BrowserRouter>
       </div>

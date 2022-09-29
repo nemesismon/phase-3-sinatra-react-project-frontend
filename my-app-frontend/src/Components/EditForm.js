@@ -4,7 +4,10 @@ function EditForm({setEditFormFlag, setChangeGuess, changeGuess, setGuesses, gue
 
 const handleGuessUpdate = (e, changeGuess) => {
     e.preventDefault()
-    console.log(guessData)
+    if (changeGuess === '') {
+        setEditFormFlag(false)
+        return
+    }
     fetch(`http://localhost:9292/guesses/${guessData.id}`, {
         method: "PATCH",
         headers: {
