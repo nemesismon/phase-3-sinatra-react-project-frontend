@@ -14,15 +14,26 @@ function App() {
   
   //***Work on context where applicable
   const[players, setPlayers] = useState([])
-  const[counter, setCounter] = useState(1)
+  const[counter, setCounter] = useState(0)
+  const[loading, setLoading] = useState(true)
+  const[currentPlayer, setCurrentPlayer] = useState(null)
 
   useEffect(() => {
     fetch("http://localhost:9292/players")
     .then((r) => r.json())
-    .then((dataReceived) => setPlayers(dataReceived))
+    .then((dataReceived) => {setPlayers(dataReceived); setLoading(false)})
   }, [])
 
-  //***Need to read last guess entered and pickup on correct current player pickup (counter)
+  if (!loading && currentPlayer !== players[counter]) {
+    setCurrentPlayer(players[counter])
+  }
+
+  // debugger
+
+  console.log(players)
+  console.log(counter)
+
+  //***Need to read last guess entered and pickup on correct current player (counter)
       
   return (
     <div className="App">
@@ -34,7 +45,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />   
             <Route path="/players" element={<Players players={players} setPlayers={setPlayers}/>} />
-            <Route path="/guesses" element={<Guesses setPlayers={setPlayers} players={players} counter={counter} setCounter={setCounter}/>} />
+            <Route path="/guesses" element={<Guesses setPlayers={setPlayers} players={players} counter={counter} setCounter={setCounter} loading={loading} setCurrentPlayer={setCurrentPlayer} currentPlayer={currentPlayer}/>} />
           </Routes>
         </BrowserRouter>
       </div>

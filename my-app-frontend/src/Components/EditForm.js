@@ -1,11 +1,9 @@
 import React, {useState} from 'react'
 
-function EditForm({setCurrentPlayer, playerGuessData, handleDeleteClick}) {
+function EditForm({setPlayers, playerGuessData, handleDeleteClick}) {
 
 const[editFormFlag, setEditFormFlag] = useState(false)
 const[changeGuess, setChangeGuess] = useState("")
-
-//***Placeholder shows name of actor name being 
 
 const handleGuessUpdate = (e) => {
     // debugger
@@ -24,7 +22,7 @@ const handleGuessUpdate = (e) => {
         }),
     })
         .then((r) => r.json())
-        .then((dataReceived) => setCurrentPlayer(dataReceived))
+        .then((dataReceived) => setPlayers(dataReceived))
     setEditFormFlag(false)
     setChangeGuess("")
     }
@@ -41,7 +39,7 @@ const handleGuessUpdate = (e) => {
                     <input 
                         type="text"
                         name="guess"
-                        placeholder="Correct actor's name"
+                        placeholder={playerGuessData.actor}
                         value={changeGuess}
                         onChange={(e) => setChangeGuess(e.target.value)}
                     />

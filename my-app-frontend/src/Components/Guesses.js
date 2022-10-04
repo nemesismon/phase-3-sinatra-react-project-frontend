@@ -1,17 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import EditForm from './EditForm'
 
-function Guesses({setPlayers, players, counter, setCounter}) {
+function Guesses({setPlayers, players, counter, setCounter, loading, setCurrentPlayer, currentPlayer}) {
 
     const[guess, setGuess] = useState("")
-    const[currentPlayer, setCurrentPlayer] = useState()
-
-    //***Clean up with condition for certain player ID
-    useEffect(() => {
-        fetch(`http://localhost:9292/players/${counter}`)
-        .then((r) => r.json())
-        .then((player) => setCurrentPlayer(player))
-    }, [players, counter])
 
     const handleAddGuess = (e) => {
         e.preventDefault()
@@ -29,10 +21,10 @@ function Guesses({setPlayers, players, counter, setCounter}) {
             }),
         })
         .then((r) => r.json())
-        .then((dataReceived) => setCurrentPlayer(dataReceived))
+        .then((dataReceived) => setPlayers(dataReceived))
 
         setGuess("")
-        counter < players.length - 1 ? setCounter(counter + 1) : setCounter(1)
+        counter < players.length - 1 ? setCounter(counter + 1) : setCounter(0)
     }}
 
     const handleDeleteClick = (playerGuessData) => {
@@ -46,16 +38,15 @@ function Guesses({setPlayers, players, counter, setCounter}) {
 
     //***Needs to show the player guessing and all of their previous guesses (in reverse order?)
 
-    // debugger
-    
     const guessList = () => {
-    if(currentPlayer === undefined) {
+    if(loading) {
         return (
             <div>
                 <p>Loading...</p>
             </div>
         )
     } else {
+        // setCurrentPlayer(players[counter])
         return currentPlayer.guesses.map((playerGuessData) => {
             return (
             <div key={playerGuessData.created_at}> 
@@ -64,7 +55,6 @@ function Guesses({setPlayers, players, counter, setCounter}) {
             )
             })}
         }
-    
     
     return (
         <div>
