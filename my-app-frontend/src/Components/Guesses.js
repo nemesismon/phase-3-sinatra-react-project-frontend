@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import EditForm from './EditForm'
 
 function Guesses({setPlayers, players, counter, setCounter, loading, setCurrentPlayer, currentPlayer}) {
 
     const[guess, setGuess] = useState("")
+
+    //***Clean up with condition for certain player ID
+
+    // debugger
 
     const handleAddGuess = (e) => {
         e.preventDefault()
@@ -38,6 +42,7 @@ function Guesses({setPlayers, players, counter, setCounter, loading, setCurrentP
 
     //***Needs to show the player guessing and all of their previous guesses (in reverse order?)
 
+    
     const guessList = () => {
     if(loading) {
         return (
@@ -46,7 +51,7 @@ function Guesses({setPlayers, players, counter, setCounter, loading, setCurrentP
             </div>
         )
     } else {
-        // setCurrentPlayer(players[counter])
+        setCurrentPlayer(players[counter])
         return currentPlayer.guesses.map((playerGuessData) => {
             return (
             <div key={playerGuessData.created_at}> 
