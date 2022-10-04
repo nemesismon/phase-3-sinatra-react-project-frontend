@@ -1,10 +1,8 @@
-import React from 'react'
-import {useState} from 'react';
+import React, {useState} from 'react'
 
 function Players({ players, setPlayers }) {
     
     const[name, setName] = useState("")
-
 
     const handleAddPlayer = (e) => {
         e.preventDefault()

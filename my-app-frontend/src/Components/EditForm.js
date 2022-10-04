@@ -1,8 +1,14 @@
-import React from 'react'
+import React, {useState} from 'react'
 
-function EditForm({setEditFormFlag, setChangeGuess, changeGuess, setPlayers, playerGuessData}) {
+function EditForm({setCurrentPlayer, playerGuessData, handleDeleteClick}) {
 
-const handleGuessUpdate = (e, changeGuess) => {
+const[editFormFlag, setEditFormFlag] = useState(false)
+const[changeGuess, setChangeGuess] = useState("")
+
+//***Placeholder shows name of actor name being 
+
+const handleGuessUpdate = (e) => {
+    // debugger
     e.preventDefault()
     if (changeGuess === '') {
         setEditFormFlag(false)
@@ -18,24 +24,38 @@ const handleGuessUpdate = (e, changeGuess) => {
         }),
     })
         .then((r) => r.json())
-        .then((dataReceived) => setPlayers(dataReceived))
+        .then((dataReceived) => setCurrentPlayer(dataReceived))
     setEditFormFlag(false)
     setChangeGuess("")
-}
+    }
+
+    const handleEditClick = () => {
+        setEditFormFlag(true)
+    }
+
+    const formDisplay = () => {
+        return (
+            editFormFlag ? 
+            <div>
+                <form onSubmit={handleGuessUpdate}>
+                    <input 
+                        type="text"
+                        name="guess"
+                        placeholder="Correct actor's name"
+                        value={changeGuess}
+                        onChange={(e) => setChangeGuess(e.target.value)}
+                    />
+                    <button type="submit">Save</button>
+                </form>
+                </div>
+            : null
+        )
+    }
 
     return (
         <div>
-            EditForm
-            <form onSubmit={(e) => handleGuessUpdate(e, changeGuess)}>
-                <input 
-                    type="text"
-                    name="guess"
-                    placeholder="Correct actor's name"
-                    value={changeGuess}
-                    onChange={(e) => setChangeGuess(e.target.value)}
-                />
-                <button type="submit">Save</button>
-            </form>
+            <p>{playerGuessData.actor} <button onClick={() => handleEditClick()}>Edit</button> <button onClick={() => handleDeleteClick(playerGuessData)}>X</button></p> 
+            {formDisplay()}        
         </div>
     )
 }

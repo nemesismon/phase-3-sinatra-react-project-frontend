@@ -1,21 +1,17 @@
-import React, { useEffect } from 'react'
-import {useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import EditForm from './EditForm'
 
 function Guesses({setPlayers, players, counter, setCounter}) {
 
     const[guess, setGuess] = useState("")
-    const[editFormFlag, setEditFormFlag] = useState(false)
-    const[changeGuess, setChangeGuess] = useState("")
-    const[currentPlayer, setCurrentPlayer] = useState({})
-   
+    const[currentPlayer, setCurrentPlayer] = useState()
+
+    //***Clean up with condition for certain player ID
     useEffect(() => {
         fetch(`http://localhost:9292/players/${counter}`)
-        .then((r) => r.json)
+        .then((r) => r.json())
         .then((player) => setCurrentPlayer(player))
-    })
-
-    console.log(currentPlayer)
+    }, [players, counter])
 
     const handleAddGuess = (e) => {
         e.preventDefault()
@@ -33,10 +29,10 @@ function Guesses({setPlayers, players, counter, setCounter}) {
             }),
         })
         .then((r) => r.json())
-        .then((dataReceived) => setPlayers(dataReceived))
+        .then((dataReceived) => setCurrentPlayer(dataReceived))
 
         setGuess("")
-        counter < players.length - 1 ? setCounter(counter + 1) : setCounter(0)
+        counter < players.length - 1 ? setCounter(counter + 1) : setCounter(1)
     }}
 
     const handleDeleteClick = (playerGuessData) => {
@@ -50,25 +46,30 @@ function Guesses({setPlayers, players, counter, setCounter}) {
 
     //***Needs to show the player guessing and all of their previous guesses (in reverse order?)
 
-    const guessList = players.map((player) => {
-        console.log(player)
-        // setCurrentPlayer(player)
-            return player.guesses.map((playerGuessData) => {
-                console.log(playerGuessData)
+    // debugger
+    
+    const guessList = () => {
+    if(currentPlayer === undefined) {
+        return (
+            <div>
+                <p>Loading...</p>
+            </div>
+        )
+    } else {
+        return currentPlayer.guesses.map((playerGuessData) => {
             return (
-            <div key={playerGuessData.created_at}>
-                <p>{playerGuessData.actor} <button onClick={() => setEditFormFlag(true)}>Edit</button> <button onClick={() => handleDeleteClick(playerGuessData)}>X</button> </p>
-                {editFormFlag ? <EditForm setEditFormFlag={setEditFormFlag} setChangeGuess={setChangeGuess} changeGuess={changeGuess} playerGuessData={playerGuessData}/> : null}
+            <div key={playerGuessData.created_at}> 
+                <EditForm setCurrentPlayer={setCurrentPlayer} setPlayers={setPlayers} playerGuessData={playerGuessData} handleDeleteClick={handleDeleteClick}/>
             </div>
             )
-        })
-    })
+            })}
+        }
     
     
     return (
         <div>
             <h3>Guesses</h3>
-            <h5><b>Current player: {currentPlayer.name}</b></h5>
+            <h5><b>Current player: {currentPlayer?.name}</b></h5>
             <form onSubmit={handleAddGuess}>
                 <input 
                     type="text"
@@ -79,7 +80,7 @@ function Guesses({setPlayers, players, counter, setCounter}) {
                 />
                 <button type="submit">Submit</button>
             </form>
-            {guessList}
+            {guessList()}
         </div>
     )
 }

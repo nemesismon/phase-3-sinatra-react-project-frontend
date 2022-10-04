@@ -1,9 +1,8 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import './App.css'
 import Home from './Home'
 import Players from './Players'
 import Guesses from './Guesses'
-import {useState, useEffect} from 'react'
 import NavBar from './NavBar'
 import {
   BrowserRouter,
@@ -15,7 +14,7 @@ function App() {
   
   //***Work on context where applicable
   const[players, setPlayers] = useState([])
-  const[counter, setCounter] = useState(0)
+  const[counter, setCounter] = useState(1)
 
   useEffect(() => {
     fetch("http://localhost:9292/players")
@@ -23,9 +22,7 @@ function App() {
     .then((dataReceived) => setPlayers(dataReceived))
   }, [])
 
-  // console.log(players[counter].guesses[0])
-  // setCurrentPlayer(players[counter])
-  // console.log(currentPlayer)
+  //***Need to read last guess entered and pickup on correct current player pickup (counter)
       
   return (
     <div className="App">
@@ -36,7 +33,7 @@ function App() {
           <NavBar />
           <Routes>
             <Route path="/" element={<Home />} />   
-            <Route path="/players" element={<Players players={players} setPlayers={setPlayers} counter={counter} setCounter={setCounter}/>} />
+            <Route path="/players" element={<Players players={players} setPlayers={setPlayers}/>} />
             <Route path="/guesses" element={<Guesses setPlayers={setPlayers} players={players} counter={counter} setCounter={setCounter}/>} />
           </Routes>
         </BrowserRouter>
