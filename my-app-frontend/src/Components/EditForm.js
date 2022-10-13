@@ -1,9 +1,10 @@
 import React, {useState} from 'react'
 
-function EditForm({setPlayers, playerGuessData, handleDeleteClick}) {
+function EditForm({setPlayers, players, playerGuessData, handleDeleteClick}) {
 
 const[editFormFlag, setEditFormFlag] = useState(false)
 const[changeGuess, setChangeGuess] = useState("")
+const[updatedGuess, setUpdatedGuess] = useState(null)
 
 const handleGuessUpdate = (e) => {
     e.preventDefault()
@@ -21,10 +22,22 @@ const handleGuessUpdate = (e) => {
         }),
     })
         .then((r) => r.json())
-        .then((dataReceived) => setPlayers(dataReceived))
+        .then((changedGuessData) => setUpdatedGuess(changedGuessData))
+        
+        
     setEditFormFlag(false)
     setChangeGuess("")
     }
+
+    if (updatedGuess !== null)
+        players.forEach((player) => {
+            return player.guesses.map((guess) => {
+                if (guess.id === updatedGuess.id) {
+                    guess.actor = updatedGuess.actor
+                }
+                return guess
+            })
+        })
 
     const handleEditClick = () => {
         setEditFormFlag(true)

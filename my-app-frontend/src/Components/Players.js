@@ -17,7 +17,7 @@ function Players({ players, setPlayers }) {
             }),
         })
             .then((r) => r.json())
-            .then((data) => setPlayers(data))
+            .then((newPlayerData) => setPlayers([...players, newPlayerData]))
         setName("")
     }
     

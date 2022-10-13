@@ -28,10 +28,6 @@ function App() {
     setCurrentPlayer(players[counter])
   }
 
-  // debugger
-
-  console.log(players[0])
-
   //***Need to read last guess entered and pickup on correct current player (counter)
       
   return (
