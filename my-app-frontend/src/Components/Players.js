@@ -22,8 +22,11 @@ function Players({ players, setPlayers }) {
     }
     
     const playersList = players.map((player) => {
+        console.log(player)
         return(
-                <p key={player.id}>{player.id}. {player.name}</p>
+                <div key={player.created_at}>
+                    <p>{player.id}. {player.name}</p>
+                </div>
     )})
 
     return (

@@ -28,10 +28,7 @@ function Guesses({setPlayers, players, counter, setCounter, loading, setCurrentP
         counter < players.length - 1 ? setCounter(counter + 1) : setCounter(0)
     }
 
-    console.log(addedGuess)
-
     useEffect(() => {
-        console.log(addedGuess)
         if (addedGuess !== null) {
             players[(addedGuess.player_id) - 1].guesses.push(addedGuess)
             setAddedGuess(null)
@@ -52,7 +49,6 @@ function Guesses({setPlayers, players, counter, setCounter, loading, setCurrentP
             return player
         })
         setPlayers(tempPlayers)
-        console.log(players)
     }
 
     const guessList = () => {

@@ -12,7 +12,6 @@ import {
 
 function App() {
   
-  //***Work on context where applicable
   const[players, setPlayers] = useState([])
   const[counter, setCounter] = useState(0)
   const[loading, setLoading] = useState(true)
@@ -27,8 +26,6 @@ function App() {
   if (!loading && currentPlayer !== players[counter]) {
     setCurrentPlayer(players[counter])
   }
-
-  //***Need to read last guess entered and pickup on correct current player (counter)
       
   return (
     <div className="App">
